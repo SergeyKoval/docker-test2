@@ -1,0 +1,22 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t deplake/react-test2 -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true deplake/react-test2 npm run test
+
+after_success:
+  - docker build -t deplake/react-test2-client ./client
+  - docker build -t deplake/react-test2-nginx ./nginx
+  - docker build -t deplake/react-test2-server ./server
+  - docker build -t deplake/react-test2-worker ./worker
+  # login to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" -- password-stdin
+  # push images to the docker hub
+  - docker push deplake/react-test2-client
+  - docker push deplake/react-test2-nginx
+  - docker push deplake/react-test2-server
+  - docker push deplake/react-test2-worker
