@@ -14,7 +14,7 @@ after_success:
   - docker build -t deplake/react-test2-server ./server
   - docker build -t deplake/react-test2-worker ./worker
   # login to the docker CLI
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" -- password-stdin
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   # push images to the docker hub
   - docker push deplake/react-test2-client
   - docker push deplake/react-test2-nginx
