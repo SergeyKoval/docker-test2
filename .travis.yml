@@ -20,3 +20,17 @@ after_success:
   - docker push deplake/react-test2-nginx
   - docker push deplake/react-test2-server
   - docker push deplake/react-test2-worker
+
+
+deploy:
+  edge: true
+  provider: elasticbeanstalk
+  region: us-east-2
+  app: docker-react-test2
+  env: DockerReactTest2-env
+  bucket_name: elasticbeanstalk-us-east-2-584465287810
+  bucket_path: test2
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
